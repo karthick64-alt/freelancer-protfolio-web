@@ -1,0 +1,54 @@
+/* Global typography & layout tweaks for a “wow” premium look */
+html,
+body {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+.font-display {
+  font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
+
+/* Utility for clickable tags in hero */
+.tag-btn {
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  padding: 0.15rem 0.65rem;
+  margin-right: 0.25rem;
+  background: rgba(15, 23, 42, 0.75);
+  color: rgb(226, 232, 240);
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.16s ease-out;
+}
+
+.tag-btn:hover {
+  border-color: rgba(59, 130, 246, 0.7);
+  background: radial-gradient(
+    circle at top left,
+    rgba(59, 130, 246, 0.35),
+    rgba(15, 23, 42, 0.95)
+  );
+}
+
+/* Dashboard tabs accent */
+.dashboard-tab.active {
+  background: linear-gradient(135deg, #1a75ff, #38bdf8);
+  color: #f9fafb;
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.55);
+}
+
+/* Admin tabs accent */
+.admin-tab.active {
+  background: linear-gradient(135deg, #1a75ff, #38bdf8);
+  color: #f9fafb;
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.55);
+}
+
+
+
+
+
+
+

@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard – FreelanceHub</title>
+    <meta
+      name="description"
+      content="Admin dashboard for managing users, services, orders, and platform settings."
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="alternate icon" href="favicon.svg" />
+
+    <!-- Google Fonts: Inter & Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+              display: ["Poppins", "system-ui", "sans-serif"],
+            },
+            colors: {
+              primary: {
+                50: "#EDF5FF",
+                100: "#DBEAFF",
+                200: "#B3D1FF",
+                300: "#80B2FF",
+                400: "#4D93FF",
+                500: "#1A75FF",
+                600: "#005BDB",
+                700: "#0044A8",
+                800: "#002E75",
+                900: "#001742",
+              },
+              slate: {
+                950: "#020617",
+              },
+            },
+            boxShadow: {
+              soft: "0 18px 45px rgba(15, 23, 42, 0.14)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="bg-slate-950 text-slate-50 antialiased overflow-x-hidden">
+    <!-- Page background decoration -->
+    <div
+      class="pointer-events-none fixed inset-0 -z-10 bg-slate-950 bg-[radial-gradient(circle_at_top,_#1A75FF33,_transparent_60%),radial-gradient(circle_at_bottom,_#0f172a,_#020617)]"
+    ></div>
+
+    <!-- Navigation -->
+    <header
+      class="sticky top-0 z-40 border-b border-white/5 bg-slate-950/80 backdrop-blur-xl"
+    >
+      <nav
+        class="mx-auto flex max-w-7xl items-center justify-between px-3 py-3 sm:px-4 sm:py-4 lg:px-6"
+      >
+        <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <div
+            class="flex h-9 w-9 items-center justify-center rounded-2xl bg-gradient-to-tr from-primary-500 to-sky-400 text-sm font-semibold text-white shadow-soft"
+          >
+            FH
+          </div>
+          <div class="hidden sm:block">
+            <span
+              class="font-display text-lg font-semibold tracking-tight text-white"
+              >FreelanceHub</span
+            >
+            <p class="text-xs text-slate-400">Admin Dashboard</p>
+          </div>
+        </a>
+
+        <div class="flex items-center gap-3">
+          <a
+            href="index.html"
+            class="flex items-center gap-2 rounded-full border border-white/10 bg-slate-900/70 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-primary-400/60 hover:bg-primary-500/10 hover:text-primary-300 transition-colors"
+            title="Home"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-4 w-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+              />
+            </svg>
+            <span class="hidden sm:inline">Home</span>
+          </a>
+          <a
+            href="index.html"
+            class="hidden text-xs text-slate-400 hover:text-slate-200 lg:inline"
+            >Back to site</a
+          >
+          <button
+            onclick="handleLogout()"
+            class="flex items-center gap-2 rounded-full border border-white/10 bg-slate-900/70 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-red-500/60 hover:bg-red-500/10 hover:text-red-300 transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-4 w-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+              />
+            </svg>
+            <span class="hidden sm:inline">Logout</span>
+          </button>
+          <div class="flex items-center gap-2 rounded-full border border-white/10 bg-slate-900/70 px-3 py-1.5">
+            <div class="h-2 w-2 rounded-full bg-emerald-400"></div>
+            <span class="text-xs font-medium text-slate-200">Admin</span>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="mx-auto max-w-7xl px-3 py-6 sm:px-4 sm:py-8 lg:px-6">
+      <!-- Page header -->
+      <div class="mb-8">
+        <h1
+          class="font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl"
+        >
+          Admin Dashboard
+        </h1>
+        <p class="mt-2 text-sm text-slate-400">
+          Manage users, services, orders, and platform settings
+        </p>
+      </div>
+
+      <!-- Stats overview -->
+      <div class="mb-8 grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        <div
+          class="rounded-2xl border border-white/5 bg-slate-950/80 p-4 shadow-soft"
+        >
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-xs font-medium text-slate-400">Total Users</p>
+              <p class="mt-1 text-2xl font-semibold text-white">2,847</p>
+              <p class="mt-1 text-[11px] text-emerald-400">+12% this month</p>
+            </div>
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-500/20"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-6 w-6 text-primary-400"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="rounded-2xl border border-white/5 bg-slate-950/80 p-4 shadow-soft"
+        >
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-xs font-medium text-slate-400">Active Orders</p>
+              <p class="mt-1 text-2xl font-semibold text-white">342</p>
+              <p class="mt-1 text-[11px] text-primary-400">+8% this month</p>
+            </div>
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-xl bg-sky-500/20"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-6 w-6 text-sky-400"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h4.125M8.25 8.25l2.25 2.25m0 0l2.25-2.25M10.5 10.5l-2.25 2.25m2.25-2.25l2.25 2.25"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="rounded-2xl border border-white/5 bg-slate-950/80 p-4 shadow-soft"
+        >
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-xs font-medium text-slate-400">Revenue</p>
+              <p class="mt-1 text-2xl font-semibold text-white">$124.5K</p>
+              <p class="mt-1 text-[11px] text-emerald-400">+23% this month</p>
+            </div>
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/20"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-6 w-6 text-emerald-400"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="rounded-2xl border border-white/5 bg-slate-950/80 p-4 shadow-soft"
+        >
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-xs font-medium text-slate-400">Pending Reviews</p>
+              <p class="mt-1 text-2xl font-semibold text-white">28</p>
+              <p class="mt-1 text-[11px] text-amber-400">Requires attention</p>
+            </div>
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/20"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-6 w-6 text-amber-400"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941 1.11.941h2.594c.55 0 1.02-.398 1.11-.94l.213-1.281c.063-.374.313-.686.645-.87.074-.04.147-.083.22-.127.324-.196.72-.257 1.075-.124l1.217.456a1.125 1.125 0 001.37-.49l1.296-2.247a1.125 1.125 0 00-.26-1.431l-1.004-.827a1.125 1.125 0 01-.43-.99c0-.085.003-.17.006-.255a6.759 6.759 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.33-.183.581-.495.644-.869l.214-1.281z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main content tabs -->
+      <div class="mb-6 overflow-x-auto -mx-3 sm:mx-0 px-3 sm:px-0">
+        <div class="inline-flex rounded-full bg-slate-900/70 p-1 min-w-max">
+          <button
+            data-admin-tab="users"
+            class="admin-tab active rounded-full px-3 py-1.5 text-xs font-medium text-slate-50 sm:px-4 sm:py-2 sm:text-sm whitespace-nowrap"
+          >
+            Users
+          </button>
+          <button
+            data-admin-tab="orders"
+            class="admin-tab rounded-full px-3 py-1.5 text-xs font-medium text-slate-300 sm:px-4 sm:py-2 sm:text-sm whitespace-nowrap"
+          >
+            Orders
+          </button>
+          <button
+            data-admin-tab="services"
+            class="admin-tab rounded-full px-3 py-1.5 text-xs font-medium text-slate-300 sm:px-4 sm:py-2 sm:text-sm whitespace-nowrap"
+          >
+            Services
+          </button>
+          <button
+            data-admin-tab="reports"
+            class="admin-tab rounded-full px-3 py-1.5 text-xs font-medium text-slate-300 sm:px-4 sm:py-2 sm:text-sm whitespace-nowrap"
+          >
+            Reports
+          </button>
+          <button
+            data-admin-tab="settings"
+            class="admin-tab rounded-full px-3 py-1.5 text-xs font-medium text-slate-300 sm:px-4 sm:py-2 sm:text-sm whitespace-nowrap"
+          >
+            Settings
+          </button>
+        </div>
+      </div>
+
+      <!-- Users tab content -->
+      <div id="admin-users" class="admin-content">
+        <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <h2 class="font-display text-lg font-semibold text-white sm:text-xl">User Management</h2>
+          <div class="flex flex-col gap-3 sm:flex-row">
+            <input
+              type="text"
+              placeholder="Search users..."
+              class="w-full sm:w-auto rounded-xl border border-white/10 bg-slate-900/80 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:border-primary-400/70 focus:outline-none"
+            />
+            <select
+              class="w-full sm:w-auto rounded-xl border border-white/10 bg-slate-900/80 px-3 py-2 text-sm text-slate-100 focus:border-primary-400/70 focus:outline-none"
+            >
+              <option>All users</option>
+              <option>Clients</option>
+              <option>Freelancers</option>
+              <option>Admins</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="rounded-3xl border border-white/5 bg-slate-950/80 shadow-soft overflow-hidden -mx-3 sm:mx-0">
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm min-w-[640px] sm:min-w-0">
+              <thead class="border-b border-white/5 bg-slate-900/50">
+                <tr>
+                  <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-slate-400">User</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-slate-400">Role</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-slate-400">Status</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-slate-400">Joined</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-slate-400">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5">
+                <tr class="hover:bg-slate-900/50 transition">
+                  <td class="px-4 py-3">
+                    <div class="flex items-center gap-3">
+                      <div class="h-8 w-8 rounded-full bg-gradient-to-tr from-primary-500 to-sky-400 flex items-center justify-center text-xs font-semibold text-white">
+                        JD
+                      </div>
+                      <div>
+                        <p class="font-medium text-slate-200">John Doe</p>
+                        <p class="text-xs text-slate-400">john.doe@example.com</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-4 py-3">
+                    <span class="inline-flex items-center rounded-full bg-primary-500/20 px-2 py-1 text-xs font-medium text-primary-300">
+                      Client
+                    </span>
+                  </td>
+                  <td class="px-4 py-3">
+                    <span class="inline-flex items-center gap-1.5">
+                      <div class="h-2 w-2 rounded-full bg-emerald-400"></div>
+                      <span class="text-xs text-slate-300">Active</span>
+                    </span>
+                  </td>
+                  <td class="px-4 py-3 text-xs text-slate-400">Jan 15, 2024</td>
+                  <td class="px-4 py-3">
+                    <div class="flex items-center gap-2">
+                      <button class="text-xs text-primary-400 hover:text-primary-300">View</button>
+                      <button class="text-xs text-slate-400 hover:text-slate-300">Edit</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="hover:bg-slate-900/50 transition">
+                  <td class="px-4 py-3">
+                    <div class="flex items-center gap-3">
+                      <div class="h-8 w-8 rounded-full bg-gradient-to-tr from-sky-500 to-cyan-400 flex items-center justify-center text-xs font-semibold text-white">
+                        JS
+                      </div>
+                      <div>
+                        <p class="font-medium text-slate-200">Jane Smith</p>
+                        <p class="text-xs text-slate-400">jane.smith@example.com</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-4 py-3">
+                    <span class="inline-flex items-center rounded-full bg-sky-500/20 px-2 py-1 text-xs font-medium text-sky-300">
+                      Freelancer
+                    </span>
+                  </td>
+                  <td class="px-4 py-3">
+                    <span class="inline-flex items-center gap-1.5">
+                      <div class="h-2 w-2 rounded-full bg-emerald-400"></div>
+                      <span class="text-xs text-slate-300">Active</span>
+                    </span>
+                  </td>
+                  <td class="px-4 py-3 text-xs text-slate-400">Dec 8, 2023</td>
+                  <td class="px-4 py-3">
+                    <div class="flex items-center gap-2">
+                      <button class="text-xs text-primary-400 hover:text-primary-300">View</button>
+                      <button class="text-xs text-slate-400 hover:text-slate-300">Edit</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="hover:bg-slate-900/50 transition">
+                  <td class="px-4 py-3">
+                    <div class="flex items-center gap-3">
+                      <div class="h-8 w-8 rounded-full bg-gradient-to-tr from-amber-500 to-orange-400 flex items-center justify-center text-xs font-semibold text-white">
+                        MB
+                      </div>
+                      <div>
+                        <p class="font-medium text-slate-200">Mike Brown</p>
+                        <p class="text-xs text-slate-400">mike.brown@example.com</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-4 py-3">
+                    <span class="inline-flex items-center rounded-full bg-primary-500/20 px-2 py-1 text-xs font-medium text-primary-300">
+                      Client
+                    </span>
+                  </td>
+                  <td class="px-4 py-3">
+                    <span class="inline-flex items-center gap-1.5">
+                      <div class="h-2 w-2 rounded-full bg-amber-400"></div>
+                      <span class="text-xs text-slate-300">Suspended</span>
+                    </span>
+                  </td>
+                  <td class="px-4 py-3 text-xs text-slate-400">Nov 22, 2023</td>
+                  <td class="px-4 py-3">
+                    <div class="flex items-center gap-2">
+                      <button class="text-xs text-primary-400 hover:text-primary-300">View</button>
+                      <button class="text-xs text-slate-400 hover:text-slate-300">Edit</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="hover:bg-slate-900/50 transition">
+                  <td class="px-4 py-3">
+                    <div class="flex items-center gap-3">
+                      <div class="h-8 w-8 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-xs font-semibold text-white">
+                        SC
+                      </div>
+                      <div>
+                        <p class="font-medium text-slate-200">Sarah Chen</p>
+                        <p class="text-xs text-slate-400">sarah.chen@example.com</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-4 py-3">
+                    <span class="inline-flex items-center rounded-full bg-sky-500/20 px-2 py-1 text-xs font-medium text-sky-300">
+                      Freelancer
+                    </span>
+                  </td>
+                  <td class="px-4 py-3">
+                    <span class="inline-flex items-center gap-1.5">
+                      <div class="h-2 w-2 rounded-full bg-emerald-400"></div>
+                      <span class="text-xs text-slate-300">Active</span>
+                    </span>
+                  </td>
+                  <td class="px-4 py-3 text-xs text-slate-400">Feb 3, 2024</td>
+                  <td class="px-4 py-3">
+                    <div class="flex items-center gap-2">
+                      <button class="text-xs text-primary-400 hover:text-primary-300">View</button>
+                      <button class="text-xs text-slate-400 hover:text-slate-300">Edit</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders tab content -->
+      <div id="admin-orders" class="admin-content hidden">
+        <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <h2 class="font-display text-lg font-semibold text-white sm:text-xl">Order Management</h2>
+          <div class="flex gap-3">
+            <select
+              class="w-full sm:w-auto rounded-xl border border-white/10 bg-slate-900/80 px-3 py-2 text-sm text-slate-100 focus:border-primary-400/70 focus:outline-none"
+            >
+              <option>All orders</option>
+              <option>Pending</option>
+              <option>In progress</option>
+              <option>Completed</option>
+              <option>Cancelled</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div class="rounded-2xl border border-white/5 bg-slate-950/80 p-4 shadow-soft">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+              <div class="flex-1 min-w-0">
+                <div class="flex flex-wrap items-center gap-2 mb-2">
+                  <h3 class="font-semibold text-sm sm:text-base text-slate-200">Website Redesign Project</h3>
+                  <span class="inline-flex items-center rounded-full bg-primary-500/20 px-2 py-1 text-xs font-medium text-primary-300 whitespace-nowrap">
+                    In Progress
+                  </span>
+                </div>
+                <p class="text-xs text-slate-400 mb-3 break-words">
+                  Client: John Doe · Freelancer: Jane Smith · Order #ORD-2024-001
+                </p>
+                <div class="flex flex-wrap items-center gap-2 sm:gap-4 text-xs text-slate-400">
+                  <span>Budget: $2,500</span>
+                  <span>Started: Jan 20, 2024</span>
+                  <span>Due: Feb 15, 2024</span>
+                </div>
+              </div>
+              <button class="text-xs text-primary-400 hover:text-primary-300 whitespace-nowrap sm:ml-3">View Details</button>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-white/5 bg-slate-950/80 p-4 shadow-soft">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+              <div class="flex-1 min-w-0">
+                <div class="flex flex-wrap items-center gap-2 mb-2">
+                  <h3 class="font-semibold text-sm sm:text-base text-slate-200">Logo Design Package</h3>
+                  <span class="inline-flex items-center rounded-full bg-emerald-500/20 px-2 py-1 text-xs font-medium text-emerald-300 whitespace-nowrap">
+                    Completed
+                  </span>
+                </div>
+                <p class="text-xs text-slate-400 mb-3 break-words">
+                  Client: Mike Brown · Freelancer: Sarah Chen · Order #ORD-2024-002
+                </p>
+                <div class="flex flex-wrap items-center gap-2 sm:gap-4 text-xs text-slate-400">
+                  <span>Budget: $800</span>
+                  <span>Started: Jan 10, 2024</span>
+                  <span>Completed: Jan 28, 2024</span>
+                </div>
+              </div>
+              <button class="text-xs text-primary-400 hover:text-primary-300 whitespace-nowrap sm:ml-3">View Details</button>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-white/5 bg-slate-950/80 p-4 shadow-soft">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+              <div class="flex-1 min-w-0">
+                <div class="flex flex-wrap items-center gap-2 mb-2">
+                  <h3 class="font-semibold text-sm sm:text-base text-slate-200">Mobile App Development</h3>
+                  <span class="inline-flex items-center rounded-full bg-amber-500/20 px-2 py-1 text-xs font-medium text-amber-300 whitespace-nowrap">
+                    Pending
+                  </span>
+                </div>
+                <p class="text-xs text-slate-400 mb-3 break-words">
+                  Client: John Doe · Freelancer: Jane Smith · Order #ORD-2024-003
+                </p>
+                <div class="flex flex-wrap items-center gap-2 sm:gap-4 text-xs text-slate-400">
+                  <span>Budget: $5,000</span>
+                  <span>Created: Feb 1, 2024</span>
+                  <span>Due: Mar 1, 2024</span>
+                </div>
+              </div>
+              <button class="text-xs text-primary-400 hover:text-primary-300 whitespace-nowrap sm:ml-3">View Details</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Services tab content -->
+      <div id="admin-services" class="admin-content hidden">
+        <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <h2 class="font-display text-lg font-semibold text-white sm:text-xl">Service Management</h2>
+          <div class="flex flex-col gap-3 sm:flex-row">
+            <input
+              type="text"
+              placeholder="Search services..."
+              class="w-full sm:w-auto rounded-xl border border-white/10 bg-slate-900/80 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:border-primary-400/70 focus:outline-none"
+            />
+            <select
+              class="w-full sm:w-auto rounded-xl border border-white/10 bg-slate-900/80 px-3 py-2 text-sm text-slate-100 focus:border-primary-400/70 focus:outline-none"
+            >
+              <option>All categories</option>
+              <option>Web Design</option>
+              <option>Development</option>
+              <option>Marketing</option>
+              <option>Writing</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="rounded-2xl border border-white/5 bg-slate-950/80 p-4 shadow-soft">
+            <div class="mb-3 flex items-start justify-between">
+              <h3 class="font-semibold text-slate-200">UI/UX Design</h3>
+              <span class="inline-flex items-center rounded-full bg-emerald-500/20 px-2 py-1 text-xs font-medium text-emerald-300">
+                Active
+              </span>
+            </div>
+            <p class="text-xs text-slate-400 mb-3">By Jane Smith</p>
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-slate-300">Starting at</span>
+              <span class="font-semibold text-primary-400">$500</span>
+            </div>
+            <div class="mt-3 flex items-center gap-2">
+              <button class="flex-1 rounded-lg border border-white/10 bg-slate-900/70 px-3 py-1.5 text-xs font-medium text-slate-200 hover:bg-slate-800">
+                View
+              </button>
+              <button class="flex-1 rounded-lg border border-white/10 bg-slate-900/70 px-3 py-1.5 text-xs font-medium text-slate-200 hover:bg-slate-800">
+                Edit
+              </button>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-white/5 bg-slate-950/80 p-4 shadow-soft">
+            <div class="mb-3 flex items-start justify-between">
+              <h3 class="font-semibold text-slate-200">Logo Design</h3>
+              <span class="inline-flex items-center rounded-full bg-emerald-500/20 px-2 py-1 text-xs font-medium text-emerald-300">
+                Active
+              </span>
+            </div>
+            <p class="text-xs text-slate-400 mb-3">By Sarah Chen</p>
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-slate-300">Starting at</span>
+              <span class="font-semibold text-primary-400">$300</span>
+            </div>
+            <div class="mt-3 flex items-center gap-2">
+              <button class="flex-1 rounded-lg border border-white/10 bg-slate-900/70 px-3 py-1.5 text-xs font-medium text-slate-200 hover:bg-slate-800">
+                View
+              </button>
+              <button class="flex-1 rounded-lg border border-white/10 bg-slate-900/70 px-3 py-1.5 text-xs font-medium text-slate-200 hover:bg-slate-800">
+                Edit
+              </button>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-white/5 bg-slate-950/80 p-4 shadow-soft">
+            <div class="mb-3 flex items-start justify-between">
+              <h3 class="font-semibold text-slate-200">Web Development</h3>
+              <span class="inline-flex items-center rounded-full bg-amber-500/20 px-2 py-1 text-xs font-medium text-amber-300">
+                Pending Review
+              </span>
+            </div>
+            <p class="text-xs text-slate-400 mb-3">By New Freelancer</p>
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-slate-300">Starting at</span>
+              <span class="font-semibold text-primary-400">$1,200</span>
+            </div>
+            <div class="mt-3 flex items-center gap-2">
+              <button class="flex-1 rounded-lg border border-white/10 bg-slate-900/70 px-3 py-1.5 text-xs font-medium text-slate-200 hover:bg-slate-800">
+                Review
+              </button>
+              <button class="flex-1 rounded-lg border border-white/10 bg-slate-900/70 px-3 py-1.5 text-xs font-medium text-slate-200 hover:bg-slate-800">
+                Edit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reports tab content -->
+      <div id="admin-reports" class="admin-content hidden">
+        <div class="mb-6">
+          <h2 class="font-display text-lg font-semibold text-white mb-4 sm:text-xl">Analytics & Reports</h2>
+        </div>
+
+        <div class="grid gap-6 lg:grid-cols-2">
+          <div class="rounded-2xl border border-white/5 bg-slate-950/80 p-6 shadow-soft">
+            <h3 class="font-semibold text-slate-200 mb-4">Revenue Overview</h3>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-slate-400">This Month</span>
+                <span class="font-semibold text-white">$45,230</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-slate-400">Last Month</span>
+                <span class="font-semibold text-white">$38,450</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-slate-400">This Year</span>
+                <span class="font-semibold text-primary-400">$124,500</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-white/5 bg-slate-950/80 p-6 shadow-soft">
+            <h3 class="font-semibold text-slate-200 mb-4">User Growth</h3>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-slate-400">New Users (This Month)</span>
+                <span class="font-semibold text-white">342</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-slate-400">Active Users</span>
+                <span class="font-semibold text-white">1,847</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-slate-400">Total Users</span>
+                <span class="font-semibold text-primary-400">2,847</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-white/5 bg-slate-950/80 p-6 shadow-soft">
+            <h3 class="font-semibold text-slate-200 mb-4">Order Statistics</h3>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-slate-400">Completed Orders</span>
+                <span class="font-semibold text-emerald-400">1,234</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-slate-400">In Progress</span>
+                <span class="font-semibold text-primary-400">342</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-slate-400">Cancelled</span>
+                <span class="font-semibold text-amber-400">28</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-white/5 bg-slate-950/80 p-6 shadow-soft">
+            <h3 class="font-semibold text-slate-200 mb-4">Platform Health</h3>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-slate-400">Average Response Time</span>
+                <span class="font-semibold text-white">2.3 hours</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-slate-400">Dispute Rate</span>
+                <span class="font-semibold text-white">1.2%</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-slate-400">Satisfaction Score</span>
+                <span class="font-semibold text-emerald-400">4.7/5.0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 rounded-2xl border border-white/5 bg-slate-950/80 p-6 shadow-soft">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-semibold text-slate-200">Export Reports</h3>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <button class="rounded-lg border border-white/10 bg-slate-900/70 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-slate-800">
+              Export User Report
+            </button>
+            <button class="rounded-lg border border-white/10 bg-slate-900/70 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-slate-800">
+              Export Revenue Report
+            </button>
+            <button class="rounded-lg border border-white/10 bg-slate-900/70 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-slate-800">
+              Export Order Report
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings tab content -->
+      <div id="admin-settings" class="admin-content hidden">
+        <div class="mb-6">
+          <h2 class="font-display text-lg font-semibold text-white mb-4 sm:text-xl">Platform Settings</h2>
+        </div>
+
+        <div class="space-y-6">
+          <div class="rounded-2xl border border-white/5 bg-slate-950/80 p-6 shadow-soft">
+            <h3 class="font-semibold text-slate-200 mb-4">General Settings</h3>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-xs font-medium text-slate-400 mb-2">Platform Name</label>
+                <input
+                  type="text"
+                  value="FreelanceHub"
+                  class="w-full rounded-xl border border-white/10 bg-slate-900/80 px-3 py-2 text-sm text-slate-100 focus:border-primary-400/70 focus:outline-none"
+                />
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-400 mb-2">Platform Commission (%)</label>
+                <input
+                  type="number"
+                  value="10"
+                  class="w-full rounded-xl border border-white/10 bg-slate-900/80 px-3 py-2 text-sm text-slate-100 focus:border-primary-400/70 focus:outline-none"
+                />
+              </div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm font-medium text-slate-200">Enable Email Notifications</p>
+                  <p class="text-xs text-slate-400">Send email notifications to users</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" checked class="sr-only peer">
+                  <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-500"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-white/5 bg-slate-950/80 p-6 shadow-soft">
+            <h3 class="font-semibold text-slate-200 mb-4">Security Settings</h3>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm font-medium text-slate-200">Two-Factor Authentication</p>
+                  <p class="text-xs text-slate-400">Require 2FA for admin accounts</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" checked class="sr-only peer">
+                  <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-500"></div>
+                </label>
+              </div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm font-medium text-slate-200">IP Whitelist</p>
+                  <p class="text-xs text-slate-400">Restrict admin access to specific IPs</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" class="sr-only peer">
+                  <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-500"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-white/5 bg-slate-950/80 p-6 shadow-soft">
+            <h3 class="font-semibold text-slate-200 mb-4">Content Moderation</h3>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm font-medium text-slate-200">Auto-Moderate Reviews</p>
+                  <p class="text-xs text-slate-400">Automatically flag suspicious reviews</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" checked class="sr-only peer">
+                  <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-500"></div>
+                </label>
+              </div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm font-medium text-slate-200">Require Service Approval</p>
+                  <p class="text-xs text-slate-400">Manually approve new services</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" checked class="sr-only peer">
+                  <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-500"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-end gap-3">
+            <button class="rounded-lg border border-white/10 bg-slate-900/70 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-slate-800">
+              Cancel
+            </button>
+            <button class="rounded-lg bg-gradient-to-r from-primary-500 to-sky-400 px-4 py-2 text-sm font-semibold text-white shadow-soft hover:from-primary-400 hover:to-sky-300">
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="main.js"></script>
+    <script>
+      // Admin dashboard tab switching
+      const adminTabs = document.querySelectorAll(".admin-tab");
+      const adminContents = document.querySelectorAll(".admin-content");
+
+      adminTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const target = tab.getAttribute("data-admin-tab");
+
+          adminTabs.forEach((t) => t.classList.remove("active"));
+          tab.classList.add("active");
+
+          adminContents.forEach((content) => {
+            content.classList.add("hidden");
+          });
+
+          const targetContent = document.getElementById(`admin-${target}`);
+          if (targetContent) {
+            targetContent.classList.remove("hidden");
+          }
+        });
+      });
+
+      // Logout handler
+      function handleLogout() {
+        if (confirm("Are you sure you want to logout?")) {
+          // Clear any admin session data (placeholder for real backend integration)
+          // localStorage.removeItem('adminToken');
+          // sessionStorage.removeItem('adminSession');
+          
+          // Redirect to home page
+          window.location.href = "index.html";
+        }
+      }
+    </script>
+  </body>
+</html>
+
